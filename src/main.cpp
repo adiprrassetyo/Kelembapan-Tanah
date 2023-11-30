@@ -8,7 +8,6 @@
 #include <ESP8266HTTPClient.h>
 #include <SPI.h>
 #include <ArduinoJson.h>
-#include <WiFiClientSecureBearSSL.h>
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
@@ -18,14 +17,14 @@ const char *pass = "babikelen";
 // const char *pass = "12345678";
 
 // inisialisasi server, untuk mengirim data ke server saya
-const char *host = "https://kelembabantanahaz.komputasi.org";
+const char *host = "http://kelembabantanahaz.komputasi.org";
 // Fingerprint sertifikat SSL server (diperoleh dari sertifikat server yang valid)
-const char *fingerprint = "CF:2A:98:95:FF:D9:A3:B1:C0:F9:61:F9:BC:D1:AC:FE:49:F3:85:11";
+// const char *fingerprint = "CF:2A:98:95:FF:D9:A3:B1:C0:F9:61:F9:BC:D1:AC:FE:49:F3:85:11";
 HTTPClient http;
 
 // Objek WiFiClientSecure untuk koneksi HTTPS
-BearSSL::WiFiClientSecure client;
-// WiFiClient client;
+// BearSSL::WiFiClientSecure client;
+WiFiClient client;
 
 // inisialisasi pin
 int ledMerah = D4;
@@ -68,7 +67,7 @@ void setup()
   digitalWrite(ledHijau, LOW);
   digitalWrite(Buzzer, LOW);
 
-  client.setFingerprint(fingerprint);
+  // client.setFingerprint(fingerprint);
 }
 
 void loop()
@@ -83,7 +82,7 @@ void loop()
   Serial.print("connecting to ");
   Serial.println(host);
 
-  delay(10000);
+  delay(1000);
   http.begin(client, send);
   Serial.print("Requesting URL: ");
   Serial.println(send);
